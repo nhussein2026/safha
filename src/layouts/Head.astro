@@ -9,4 +9,16 @@ const { title, description } = Astro.props;
   <meta name="generator" content={Astro.generator} />
   <meta name="description" content={description} />
   <title>{title}</title>
+
+  <script type="module">
+    import "flowbite";
+  </script>
+
+  <!-- Preconnect and Load Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Gunjala+Gondi:wght@400..700&family=Marhey:wght@300..700&display=swap"
+    rel="stylesheet"
+  />
 </head>
