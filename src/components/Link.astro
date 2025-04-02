@@ -1,0 +1,28 @@
+---
+// This file was automatically generated. Do not edit it manually.
+interface Props {
+  href: string;
+  text: string;
+  active?: boolean;
+  icon?: {
+    name: string;
+    side?: "left" | "right";
+  };
+  style?: "primary" | "secondary" | "tertiary";
+  target?: string;
+  classes?: string;
+}
+
+const { href, text, active, icon, style, target, classes, ...rest } =
+  Astro.props as Props;
+---
+
+<a href={href} target={target} class={`link ${style} ${classes}`} {...rest}>
+  {icon && icon.side === "left" && <i class={`icon-${icon.name} icon-left`} />}
+  {text}
+  {
+    icon && icon.side === "right" && (
+      <i class={`icon-${icon.name} icon-right`} />
+    )
+  }
+</a>

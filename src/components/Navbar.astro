@@ -1,5 +1,6 @@
 ---
 import { isRenderTemplateResult } from "astro/runtime/server/render/astro/render-template.js";
+import Link from "./Link.astro";
 
 /* Define a TypeScript interface for our nav items */
 export interface NavItem {
@@ -11,6 +12,7 @@ export interface NavItem {
 // Use props or fallback to a default list
 const navItems: NavItem[] = Astro.props.navItems ?? [
   { title: "الرئيسية", url: "/", active: true },
+  { title: "المدونة", url: "/blog" },
   { title: "من نحن", url: "/about" },
 ];
 ---
@@ -136,13 +138,14 @@ const navItems: NavItem[] = Astro.props.navItems ?? [
         {
           navItems.map((item) => (
             <li>
-              <a
+              <Link
                 href={item.url}
-                class="block py-2 px-3 text-2xl  text-[#27FFE3] rounded-sm md:bg-transparent md:p-0 no-underline outline-none"
-                aria-current="page"
-              >
-                {item.title}
-              </a>
+                text={item.title}
+                active={item.active}
+                classes="block py-2 px-3 text-2xl text-[#27FFE3] rounded-sm md:bg-transparent md:p-0 no-underline outline-none"
+                aria-current={item.active ? "page" : undefined}
+                style={item.active ? "primary" : "secondary"}
+              />
             </li>
           ))
         }
