@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "../../../layouts/Layout.astro";
+import { formatArabicDate } from "../../../lib/dates";
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const categories = [
+    ...new Set(posts.flatMap((post) => post.data.categories)),
+  ];
+
+  return categories.map((category) => ({
+    params: { category },
+    props: {
+      category,
+      posts: posts.filter((post) => post.data.categories.includes(category)),
+    },
+  }));
+}
+
+const { category, posts } = Astro.props;
+---
+
+<Layout title={`مقالات في تصنيف: ${category}`}>
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-right mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+        مقالات في تصنيف: <span class="text-emerald-600">{category}</span>
+      </h1>
+      <a
+        href="/blog"
+        class="text-gray-600 dark:text-gray-400 hover:text-emerald-600 transition-colors"
+      >
+        ← العودة إلى جميع المقالات
+      </a>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        posts.map((post) => (
+          <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-100 text-sm px-3 py-1 rounded-full">
+                {category}
+              </span>
+              <time class="text-sm text-gray-500 dark:text-gray-400">
+                {formatArabicDate(post.data.pubDate)}
+              </time>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">
+              <a
+                href={`/blog/${post.slug}`}
+                class="hover:text-emerald-600 transition-colors"
+              >
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300 line-clamp-3">
+              {post.data.description}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
