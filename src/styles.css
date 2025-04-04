@@ -4,3 +4,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&display=swap');
+
+:global(article.prose) {
+    direction: rtl;
+    text-align: right;
+    font-family: "Noto Sans Arabic", "Tahoma", sans-serif;
+}
+
+:global(article.prose img) {
+    border-radius: 0.75rem;
+    margin: 2rem auto;
+}
+
+:global(article.prose h2) {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+:global(article.prose p) {
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+html,
+body {
+    height: 100%;
+}

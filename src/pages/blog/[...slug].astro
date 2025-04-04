@@ -1,15 +1,12 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import { formatArabicDate } from "../../lib/dates";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
-    params: {
-      slug: post.slug, // slug = "2023/10/my-first-post"
-    },
+    params: { slug: post.slug },
     props: { post },
   }));
 }
@@ -19,17 +16,66 @@ const { Content } = await post.render();
 ---
 
 <Layout title={post.data.title}>
-  <article>
-    <h1>{post.data.title}</h1>
-    <div class="meta">
-      <time datetime={post.data.pubDate.toISOString()}>
-        {formatArabicDate(post.data.pubDate)}
-      </time>
-      <div class="tags">
-        {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+  <article class="max-w-4xl mx-auto px-4 py-8">
+    <header class="mb-8 text-right">
+      <h1 class="text-4xl font-bold text-gray-800 dark:text-[#1E293B]-100 mb-4">
+        {post.data.title}
+      </h1>
+
+      <div
+        class="flex flex-col md:flex-row md:items-center gap-4 text-gray-600 dark:text-gray-400"
+      >
+        <time
+          datetime={post.data.pubDate.toISOString()}
+          class="flex items-center gap-2"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            ></path>
+          </svg>
+          {formatArabicDate(post.data.pubDate)}
+        </time>
+
+        <div class="flex flex-wrap gap-2">
+          {
+            post.data.tags.map((tag) => (
+              <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
       </div>
+    </header>
+
+    <hr class="mb-8 border-gray-200 dark:border-gray-700" />
+
+    <div class="prose dark:prose-invert max-w-none text-right">
+      <Content />
     </div>
 
-    <Content />
+    <div class="mt-12 flex gap-4 justify-end">
+      <a
+        href="/blog"
+        class="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+      >
+        <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20">
+          <path
+            fill-rule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+        العودة إلى المدونة
+      </a>
+    </div>
   </article>
 </Layout>

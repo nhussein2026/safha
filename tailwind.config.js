@@ -11,6 +11,17 @@ module.exports = {
         Amiri: ["Amiri", "serif"],
         Marhey: ["Marhey", "sans-serif"],
       },
+      colors: {
+        "snow-white": "#F8FAFC", // Light background
+        "dark-navy": "#0F172A", // Dark background
+        "deep-ocean": "#1E293B", // Dark text
+        "mountain-mist": "#64748B", // Secondary text
+        "morning-fog": "#E2E8F0", // Borders
+        "sky-blue": "#0EA5E9", // Links/Headings
+        "royal-periwinkle": "#4F46E5", // CTAs
+        "emerald-growth": "#10B981", // Positive
+        "amber-glow": "#F59E0B", // Highlights
+      },
 
       // hero section background settings
       animation: {
@@ -49,7 +60,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [
+    require("flowbite/plugin"),
+    require("@tailwindcss/line-clamp"),
+    require("@tailwindcss/typography"),
+  ],
   corePlugins: {
     preflight: false, // Disable Tailwind's default styles if there's a conflict
   },
