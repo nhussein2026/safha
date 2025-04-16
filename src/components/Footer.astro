@@ -8,10 +8,9 @@ export interface FooterItem {
 }
 
 const footerItems: NavItem[] = Astro.props.footerItems ?? [
-  { title: "About", url: "#" },
-  { title: "Privacy Policy", url: "#" },
-  { title: "Licensing", url: "#" },
-  { title: "Contact", url: "#" },
+  { title: "صفحة", url: "about" },
+  { title: "سياسة الخصوصية", url: "#" },
+  { title: "بحث", url: "search" },
 ];
 ---
 
@@ -39,23 +38,14 @@ const footerItems: NavItem[] = Astro.props.footerItems ?? [
             </li>
           ))
         }
-
-        <!-- <li>
-          <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">Contact</a>
-        </li> -->
       </ul>
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
-      >© <span id="copyright"></span>
-      <a href="https://safha.dev/" class="hover:underline">Safha™</a>. All
-      Rights Reserved.</span
+    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
+      . جميع الحقوق محفوظة © <span id="copyright"></span><a
+        href="https://safha.dev/"
+        class="hover:underline">صفحة</a
+      ></span
     >
   </div>
 </footer>
