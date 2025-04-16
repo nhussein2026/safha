@@ -4,10 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run generate-search-index && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-search-index": "ts-node scripts/generate-search-index.ts"
+    "generate-search-index": "tsc scripts/generate-search-index.ts --outDir scripts/build && node scripts/build/generate-search-index.js",
+    "build": "npm run generate-search-index && astro build"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.3",
