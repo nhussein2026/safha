@@ -7,7 +7,7 @@
   ],
   "exclude": ["dist"],
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "jsx": "react",
     "jsxImportSource": "react",
     "module": "ESNext",
     "target": "ES2020",
