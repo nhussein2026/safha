@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-search-index": "tsc scripts/generate-search-index.ts --outDir scripts/build && node scripts/build/generate-search-index.js",
+    "generate-search-index": "tsx scripts/generate-search-index.ts",
     "build": "npm run generate-search-index && astro build"
   },
   "dependencies": {
@@ -17,9 +17,7 @@
     "@tailwindcss/postcss": "^4.0.17",
     "@tailwindcss/typography": "^0.5.16",
     "astro": "^5.5.6",
-    "fast-glob": "^3.3.3",
     "fuse.js": "^7.1.0",
-    "gray-matter": "^4.0.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
@@ -30,7 +28,9 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "autoprefixer": "^10.4.21",
+    "fast-glob": "^3.3.3",
     "flowbite": "^3.1.2",
+    "gray-matter": "^4.0.3",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "ts-node": "^10.9.2",
