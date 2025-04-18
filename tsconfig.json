@@ -8,7 +8,7 @@
   ],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2022", // ensure support for private fields
     "module": "ESNext",
     "moduleResolution": "Node",
     "lib": ["DOM", "ESNext"],
@@ -17,7 +17,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "allowJs": true,
-    "types": ["node", "react", "react-dom", "astro/client"]
+    "types": ["node", "react", "astro/client"]
   }
 }

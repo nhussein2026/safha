@@ -1,15 +1,16 @@
 "use strict";
+/// <reference types="astro/client" />
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
-var gray_matter_1 = require("gray-matter");
-var fast_glob_1 = require("fast-glob");
+var grayMatter = require("gray-matter");
+var fg = require("fast-glob");
 var POSTS_PATH = 'src/content/blog';
-var files = fast_glob_1.default.sync("".concat(POSTS_PATH, "/**/*.mdx"));
+var files = fg.sync("".concat(POSTS_PATH, "/**/*.mdx"));
 var index = files.map(function (file) {
     var _a;
     var raw = fs.readFileSync(file, 'utf-8');
-    var _b = (0, gray_matter_1.default)(raw), data = _b.data, content = _b.content;
+    var _b = grayMatter(raw), data = _b.data, content = _b.content;
     var relativePath = path.relative(POSTS_PATH, file);
     var slug = relativePath
         .replace(/\.mdx$/, '')
