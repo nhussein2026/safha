@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { sync } from 'fast-glob';
-import { matter } from 'gray-matter';
+import matter from 'gray-matter';
+
 
 const POSTS_PATH = 'src/content/blog';
 
