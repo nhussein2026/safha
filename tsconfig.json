@@ -17,6 +17,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "allowJs": true,
     "types": ["node", "react", "react-dom", "astro/client"]
   }
 }

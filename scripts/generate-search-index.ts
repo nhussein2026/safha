@@ -1,14 +1,16 @@
+/// <reference types="astro/client" />
+
 import * as fs from 'fs';
 import * as path from 'path';
-import matter from 'gray-matter';
-import glob from 'fast-glob';
+import * as grayMatter from 'gray-matter';
+import * as fg from 'fast-glob';
 
 const POSTS_PATH = 'src/content/blog';
-const files = glob.sync(`${POSTS_PATH}/**/*.mdx`);
+const files = fg.sync(`${POSTS_PATH}/**/*.mdx`);
 
 const index = files.map((file) => {
   const raw = fs.readFileSync(file, 'utf-8');
-  const { data, content } = matter(raw);
+  const { data, content } = grayMatter(raw);
 
   const relativePath = path.relative(POSTS_PATH, file);
   const slug = relativePath
