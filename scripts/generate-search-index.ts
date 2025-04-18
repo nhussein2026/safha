@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { sync } from 'fast-glob';
+import fastGlob from 'fast-glob';
 import matter from 'gray-matter';
 
 
 const POSTS_PATH = 'src/content/blog';
 
 async function generateIndex() {
-  const files = sync(`${POSTS_PATH}/**/*.mdx`);
+const files = fastGlob.sync(`${POSTS_PATH}/**/*.mdx`);
   
   const index = files.map((file) => {
     const raw = fs.readFileSync(file, 'utf-8');
