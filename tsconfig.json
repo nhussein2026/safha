@@ -1,16 +1,22 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "scripts/**/*", "**/*.ts", "**/*.tsx"],
+  "include": [
+    ".astro/types.d.ts",
+    "scripts/**/*",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "Node",
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "types": ["node"]
+    "types": ["node", "react", "react-dom", "astro/client"]
   }
 }
