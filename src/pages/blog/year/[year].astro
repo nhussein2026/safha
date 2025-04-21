@@ -1,35 +1,37 @@
 ---
 import { getCollection } from "astro:content";
-
 import Layout from "../../../layouts/Layout.astro";
 import { formatArabicDate } from "../../../lib/dates";
+
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  const categories = [
-    ...new Set(posts.flatMap((post) => post.data.categories)),
+  const years = [
+    ...new Set(posts.map((post) => post.data.pubDate.getFullYear())),
   ];
 
-  return categories.map((category) => ({
-    params: { category },
+  return years.map((year) => ({
+    params: { year: year.toString() },
     props: {
-      category,
-      posts: posts.filter((post) => post.data.categories.includes(category)),
+      year,
+      posts: posts
+        .filter((post) => post.data.pubDate.getFullYear() === year)
+        .sort((a, b) => b.data.pubDate - a.data.pubDate),
     },
   }));
 }
 
-const { category, posts } = Astro.props;
+const { year, posts } = Astro.props;
 ---
 
-<Layout title={`مقالات في تصنيف: ${category}`}>
+<Layout title={`مقالات سنة ${year}`}>
   <div class="container mx-auto px-4 py-8">
     <div class="text-right mb-8">
       <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-        مقالات في تصنيف: <span class="text-emerald-600">{category}</span>
+        مقالات سنة: <span class="text-purple-600">{year}</span>
       </h1>
       <a
         href="/blog"
-        class="text-gray-600 dark:text-gray-400 hover:text-emerald-600 transition-colors"
+        class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors"
       >
         ← العودة إلى جميع المقالات
       </a>
@@ -39,25 +41,38 @@ const { category, posts } = Astro.props;
       {
         posts.map((post) => (
           <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-100 text-sm px-3 py-1 rounded-full">
-                {category}
-              </span>
+            <div class="flex items-center justify-between mb-4">
               <time class="text-sm text-gray-500 dark:text-gray-400">
                 {formatArabicDate(post.data.pubDate)}
               </time>
+              <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 text-sm px-3 py-1 rounded-full">
+                {year}
+              </span>
             </div>
+
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               <a
                 href={`/blog/${post.slug}`}
-                class="hover:text-emerald-600 transition-colors"
+                class="hover:text-purple-600 transition-colors"
               >
                 {post.data.title}
               </a>
             </h2>
+
             <p class="text-gray-600 dark:text-gray-300 line-clamp-3">
               {post.data.description}
             </p>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => (
+                <a
+                  href={`/blog/tag/${tag}`}
+                  class="text-sm px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-purple-900"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
           </article>
         ))
       }

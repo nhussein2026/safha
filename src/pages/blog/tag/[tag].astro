@@ -1,29 +1,36 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
-import { formatArabicDate } from "../../../lib/dates";
+import { slugify } from "../../../lib/slugify";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
 
-  return tags.map((tag) => ({
+  // Collect unique tags
+  const tags = new Set();
+  posts.forEach((post) => {
+    post.data.tags?.forEach((tag) => tags.add(slugify(tag)));
+  });
+
+  return Array.from(tags).map((tag) => ({
     params: { tag },
-    props: {
-      tag,
-      posts: posts.filter((post) => post.data.tags.includes(tag)),
-    },
+    props: { tag },
   }));
 }
 
-const { tag, posts } = Astro.props;
+const { tag } = Astro.props;
+const posts = (await getCollection("blog")).filter((post) =>
+  post.data.tags?.some((t) => slugify(t) === tag)
+);
 ---
 
 <Layout title={`مقالات تحت تصنيف: ${tag}`}>
   <div class="container mx-auto px-4 py-8">
     <div class="text-right mb-8">
       <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-        المقالات الموسومة بـ: <span class="text-blue-600">{tag}</span>
+        المقالات الموسومة بـ:
+        <span class="text-blue-600">#{tag}</span>
+        <span class="text-gray-500 text-lg">({posts.length})</span>
       </h1>
       <a
         href="/blog"
@@ -33,35 +40,36 @@ const { tag, posts } = Astro.props;
       </a>
     </div>
 
+    <div class="bg-blue-50 dark:bg-blue-900 rounded-lg p-6 mb-8">
+      <p class="text-blue-800 dark:text-blue-200 text-lg text-right">
+        تجد هنا جميع المقالات المرتبطة بالوسم
+        <strong class="font-semibold">#{tag}</strong>. يوجد حالياً {
+          posts.length
+        } مقالة في هذا التصنيف.
+      </p>
+    </div>
+
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {
         posts.map((post) => (
           <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-            <time class="block text-sm text-gray-500 dark:text-gray-400 mb-2">
-              {formatArabicDate(post.data.pubDate)}
-            </time>
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">
-              <a
-                href={`/blog/${post.slug}`}
-                class="hover:text-blue-600 transition-colors"
-              >
-                {post.data.title}
-              </a>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+              {post.data.title}
             </h2>
-            <p class="text-gray-600 dark:text-gray-300 line-clamp-3">
-              {post.data.description}
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+              {post.data.description || "لا يوجد وصف للمقال."}
             </p>
             <div class="mt-4 flex flex-wrap gap-2">
               {post.data.tags.map((t) => (
                 <a
-                  href={`/tags/${t}`}
+                  href={`/blog/tag/${slugify(t)}`}
                   class={`text-sm px-3 py-1 rounded-full ${
-                    t === tag
+                    slugify(t) === Astro.params.tag
                       ? "bg-blue-600 text-white"
                       : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
                   }`}
                 >
-                  {t}
+                  #{t}
                 </a>
               ))}
             </div>

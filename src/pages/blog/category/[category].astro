@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import { slugify } from "../../../lib/slugify";
+
+// 🔁 Generate static paths for each unique category slug
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  const categories = new Set();
+
+  posts.forEach((post) => {
+    post.data.categories?.forEach((category) => {
+      categories.add(slugify(category));
+    });
+  });
+
+  return Array.from(categories).map((category) => ({
+    params: { category }, // ✅ This must match the file name: [category]
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+// 🔍 Filter posts that have a matching slugified category
+const posts = (await getCollection("blog")).filter((post) =>
+  post.data.categories?.some((c) => slugify(c) === category)
+);
+---
+
+<Layout title={`التصنيف: ${category}`}>
+  <div class="max-w-4xl mx-auto px-4 py-8 text-right">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
+      التصنيف: {category}
+    </h1>
+
+    <ul class="space-y-6">
+      {
+        posts.map((post) => (
+          <li>
+            <a
+              href={`/blog/${post.slug}`}
+              class="block border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            >
+              <h2 class="text-xl font-semibold text-blue-600 dark:text-blue-300">
+                {post.data.title}
+              </h2>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                {new Date(post.data.pubDate).toLocaleDateString("ar-EG")}
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>

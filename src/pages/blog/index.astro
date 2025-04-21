@@ -69,5 +69,27 @@ const posts = await getCollection("blog");
         ))
       }
     </div>
+    <!-- Add this section somewhere in your blog list -->
+    <section class="mb-12 text-right">
+      <h2
+        class="text-4xl font-bold text-gray-800 dark:text-white mb-8 text-right"
+      >
+        الأرشيف حسب السنة
+      </h2>
+      <div class="flex flex-wrap gap-3">
+        {
+          [
+            ...new Set(posts.map((post) => post.data.pubDate.getFullYear())),
+          ].map((year) => (
+            <a
+              href={`/blog/year/${year}`}
+              class="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
+            >
+              {year}
+            </a>
+          ))
+        }
+      </div>
+    </section>
   </div>
 </Layout>
