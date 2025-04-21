@@ -1,4 +1,3 @@
-import { auto } from '@popperjs/core';
 import { defineCollection, z } from 'astro:content';
 
 
