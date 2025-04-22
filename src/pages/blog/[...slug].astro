@@ -1,18 +1,28 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { formatArabicDate } from "../../lib/dates";
 import Layout from "../../layouts/Layout.astro";
 import { slugify } from "../../lib/slugify";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
+
   return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
+    params: { slug: post.slug.split("/") },
+    props: { slug: post.slug },
   }));
 }
 
-const { post } = Astro.props;
+const slugParam = Astro.params.slug; // this is an array in catch-all routes
+const slug = Array.isArray(slugParam) ? slugParam.join("/") : slugParam;
+
+if (!slug) {
+  console.error("Missing slug:", { params: Astro.params });
+  return new Response(null, { status: 404 });
+}
+
+const post = await getEntry("blog", slug);
+
 const { Content } = await post.render();
 ---
 

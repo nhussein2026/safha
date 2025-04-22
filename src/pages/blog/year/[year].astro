@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import { formatArabicDate } from "../../../lib/dates";
 
+export const prerender = true; // Enable prerendering for this page
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   const years = [
