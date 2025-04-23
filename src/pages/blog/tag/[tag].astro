@@ -54,12 +54,14 @@ const posts = (await getCollection("blog")).filter((post) =>
       {
         posts.map((post) => (
           <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {post.data.title}
-            </h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
-              {post.data.description || "لا يوجد وصف للمقال."}
-            </p>
+            <a href={`/blog/${post.slug}`} class="block mb-4">
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                {post.data.title}
+              </h2>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                {post.data.description || "لا يوجد وصف للمقال."}
+              </p>{" "}
+            </a>
             <div class="mt-4 flex flex-wrap gap-2">
               {post.data.tags.map((t) => (
                 <a

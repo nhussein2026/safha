@@ -2,6 +2,14 @@
 import { getCollection } from "astro:content";
 import { formatArabicDate } from "../lib/dates";
 import Layout from "./Layout.astro";
+import ArabicList from "../components/ArabicList.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+
+// `Content` is the MDX content
+const components = {
+  ul: ArabicList,
+  pre: CodeBlock,
+};
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -19,22 +27,20 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<Layout title="المدونة">
-  <header></header>
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  url={`/blog/${post.slug}`}
+  image={post.data.image}
+  post={post}
+>
+  <article
+    class="prose prose-sm sm:prose-base lg:prose-lg prose-blue dark:prose-invert max-w-none text-right"
+  >
+    <h1 class="">{post.data.title}</h1>
+    <time datetime={post.data.pubDate.toISOString()}>
+      {formatArabicDate(post.data.pubDate)}
+    </time>
+    <Content components={components} />
+  </article>
 </Layout>
-
-<html lang="ar" dir="rtl">
-  <head>
-    <title>{post.data.title}</title>
-    <link rel="stylesheet" href="/styles/rtl.css" />
-  </head>
-  <body>
-    <article>
-      <h1 class="">{post.data.title}</h1>
-      <time datetime={post.data.pubDate.toISOString()}>
-        {formatArabicDate(post.data.pubDate)}
-      </time>
-      <Content />
-    </article>
-  </body>
-</html>
