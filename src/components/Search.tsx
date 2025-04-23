@@ -49,7 +49,7 @@ export default function Search() {
         <input
           type="text"
           placeholder="ابحث عن مقالة"
-          className="w-full p-4 pl-10 text-lg border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+          className="w-full p-4 pl-10 text-lg border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all dark:focus:ring-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Search blog posts"
