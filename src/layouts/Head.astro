@@ -1,7 +1,7 @@
 ---
 import { SITE } from "../config/site";
 
-const { title, description, image, url, type = "website" } = Astro.props;
+const { title, description, image, url, type = "website", post } = Astro.props;
 ---
 
 <head>
@@ -58,4 +58,30 @@ const { title, description, image, url, type = "website" } = Astro.props;
   <script type="module" defer>
     import "flowbite";
   </script>
+
+  <!-- JSON-LD code -->
+  {post && (
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.data.title,
+      description: post.data.description,
+      image: `${SITE.url}${post.data.image || SITE.defaultImage}`,
+      url: `${SITE.url}/blog/${post.slug}`,
+      datePublished: post.data.pubDate.toISOString(),
+      dateModified: post.data.updatedAt?.toISOString() || post.data.pubDate.toISOString(),
+      mainEntityOfPage: {
+  "@type": "WebPage",
+  "@id": `${SITE.url}/blog/${post.slug}`
+},
+      author: {
+        "@type": "Person",
+        name: "ناصر حسين",
+        url: "https://nhussein.io",
+      }
+    })}
+  </script>
+)}
+
 </head>
