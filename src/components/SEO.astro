@@ -1,0 +1,40 @@
+---
+import { SEO } from "astro-seo";
+import { SITE } from "../config/site";
+const { title, description, ogImage } = Astro.props;
+---
+
+<SEO
+  title={title || SITE.title || "صفحة -  البرمجة والتقنية بالعربية"}
+  description={description ||
+    SITE.description ||
+    "صفحة هي منصة عربية متخصصة في تقديم محتوى تقني عربي موجهة للمطورين والمهتمين بالتقنية."}
+  openGraph={{
+    basic: {
+      title: title || "Safha",
+      type: "website",
+      image: ogImage || "https://safha.dev/og-image.png",
+      url: Astro.url.href,
+    },
+  }}
+  twitter={{
+    creator: SITE.twitterHandle,
+    card: "summary_large_image",
+  }}
+  extend={{
+    meta: [
+      {
+        name: "twitter:image",
+        content: ogImage || "https://safha.dev/og-image.png",
+      },
+      { name: "twitter:title", content: title || "صفحة" },
+      {
+        name: "twitter:description",
+        content:
+          description ||
+          "صفحة هي منصة عربية متخصصة في تقديم محتوى تقني عربي موجهة للمطورين والمهتمين بالتقنية.",
+      },
+    ],
+    link: [{ rel: "icon", href: "/favicon.ico" }],
+  }}
+/>
