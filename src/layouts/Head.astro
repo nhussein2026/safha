@@ -11,13 +11,13 @@ const { title, description, image, url, type = "website", post } = Astro.props;
   
   <!-- Dynamic SEO -->
   <SEO
-    title={title ? `${title} | ${SITE.title}` : SITE.title}
-    description={description ?? SITE.description}
-    ogImage={image ?? SITE.defaultImage}
+    title={title || SITE.title}
+    description={description || SITE.description}
+    ogImage={image || SITE.defaultImage}
   />
   
   <!-- Canonical -->
-  <link rel="canonical" href={`${SITE.url}${url ?? ""}`} />
+  <link rel="canonical" href={new URL(url || "", SITE.url).href} />
   
   <!-- Preconnect and Load Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

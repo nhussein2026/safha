@@ -5,10 +5,8 @@ const { title, description, ogImage } = Astro.props;
 ---
 
 <SEO
-  title={title || SITE.title || "صفحة -  البرمجة والتقنية بالعربية"}
-  description={description ||
-    SITE.description ||
-    "صفحة هي منصة عربية متخصصة في تقديم محتوى تقني عربي موجهة للمطورين والمهتمين بالتقنية."}
+  title={title || SITE.title}
+  description={description || SITE.description}
   openGraph={{
     basic: {
       title: title || "Safha",
