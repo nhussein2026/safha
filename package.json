@@ -18,7 +18,7 @@
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/postcss": "^4.0.17",
     "@tailwindcss/typography": "^0.5.16",
-    "astro": "^5.5.6",
+    "astro": "^5.7.9",
     "astro-meta-tags": "^0.3.1",
     "astro-seo": "^0.8.4",
     "fuse.js": "^7.1.0",

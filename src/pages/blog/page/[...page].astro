@@ -1,0 +1,182 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import { formatArabicDate } from "../../../lib/dates";
+import Pagination from "../../../components/Pagination.astro";
+import { slugify } from "../../../lib/slugify";
+export const prerender = true;
+
+export async function getStaticPaths({ paginate }) {
+  const allPosts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
+  return paginate(allPosts, { pageSize: 4 });
+}
+// Safely handle page prop
+const page = Astro.props.page;
+if (!page) throw new Error("Pagination props missing!");
+const { currentPage, totalPages, data: posts } = page;
+
+// Use sorted posts for sidebar consistency
+const allPosts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+const categories = new Set(allPosts.flatMap((p) => p.data.categories));
+const tags = new Set(allPosts.flatMap((p) => p.data.tags));
+const years = new Set(allPosts.map((p) => p.data.pubDate.getFullYear()));
+---
+
+<Layout>
+  <main class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Header -->
+      <div class="text-right mb-16">
+        <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+          المدونة
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 text-lg">
+          استكشف أحدث المقالات والموارد التعليمية
+        </p>
+      </div>
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Posts Grid -->
+        <div class="lg:w-2/3">
+          <div class="grid gap-8 md:grid-cols-2">
+            {
+              posts.map((post) => (
+                <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
+                  <a href={`/blog/${post.slug}`} class="block p-6">
+                    <time class="text-sm text-purple-600 dark:text-purple-400">
+                      {formatArabicDate(post.data.pubDate)}
+                    </time>
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-3 hover:text-purple-600 transition-colors">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                      {post.data.description}
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      {post.data.tags.map((tag) => (
+                        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div class="flex items-center justify-end gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors">
+                      <span>اقرأ المزيد</span>
+                      <svg
+                        class="w-4 h-4 rtl:rotate-180"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                </article>
+              ))
+            }
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            baseUrl="/blog/page"
+          />
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:w-1/3 space-y-8">
+          {/* Years Archive */}
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
+            <h2
+              class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2"
+            >
+              <!-- calendar icon omitted for brevity -->
+              الأرشيف السنوي
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              {
+                Array.from(years).map((year) => {
+                  const count = allPosts.filter(
+                    (p) => p.data.pubDate.getFullYear() === year
+                  ).length;
+                  return (
+                    <a
+                      href={`/blog/year/${year}`}
+                      class="px-3 py-1.5 text-sm rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
+                    >
+                      {year}{" "}
+                      <span class="text-gray-500 dark:text-gray-400 ml-1">
+                        ({count})
+                      </span>
+                    </a>
+                  );
+                })
+              }
+            </div>
+          </div>
+
+          {/* Categories */}
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
+            <h2
+              class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2"
+            >
+              <!-- tags icon omitted for brevity -->
+              التصنيفات
+            </h2>
+            <div class="space-y-2">
+              {
+                Array.from(categories).map((cat) => {
+                  const count = allPosts.filter((p) =>
+                    p.data.categories.includes(cat)
+                  ).length;
+                  return (
+                    <a
+                      href={`/blog/category/${slugify(cat)}`}
+                      class="flex justify-between items-center px-4 py-2.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors group"
+                    >
+                      <span class="group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                        {cat}
+                      </span>
+                      <span class="text-sm text-gray-500 dark:text-gray-400">
+                        ({count})
+                      </span>
+                    </a>
+                  );
+                })
+              }
+            </div>
+          </div>
+
+          {/* Tags Cloud */}
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
+            <h2
+              class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2"
+            >
+              <!-- tag icon omitted for brevity -->
+              الوسوم
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              {
+                Array.from(tags).map((tag) => (
+                  <a
+                    href={`/blog/tag/${slugify(tag)}`}
+                    class="px-3 py-1.5 text-sm rounded-full bg-blue-100/50 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                  >
+                    #{tag}
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+</Layout>

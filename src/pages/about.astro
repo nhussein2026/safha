@@ -1,9 +1,12 @@
 ---
+import { getCollection } from "astro:content";
 import IconBook from "../components/Icons/IconBook.astro";
 import IconBulb from "../components/Icons/IconBulb.astro";
 import IconGlobe from "../components/Icons/IconGlobe.astro";
 import IconRocket from "../components/Icons/IconRocket.astro";
 import Layout from "../layouts/Layout.astro";
+
+const allPosts = await getCollection("blog");
 ---
 
 <Layout title="من نحن">
@@ -17,11 +20,12 @@ import Layout from "../layouts/Layout.astro";
           class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-6"
         >
           <span
-            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-emerald-600"
+            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-emerald-600 mb-5"
           >
             صفحة
           </span>
-          <br />بوابتك إلى العالم التقني العربي
+          <br />
+          <span class="mt-5">بوابتك إلى العالم التقني العربي</span>
         </h1>
         <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
           نُترجم التعقيد التقني إلى محتوى عربي مبسَّط، لنصنع فضاءً معرفياً يُلهم
@@ -126,7 +130,9 @@ import Layout from "../layouts/Layout.astro";
           </h3>
           <div class="space-y-6">
             <div class="text-center p-4 bg-white dark:bg-gray-800 rounded-xl">
-              <p class="text-4xl font-bold text-emerald-600 mb-2">+850</p>
+              <p class="text-4xl font-bold text-emerald-600 mb-2">
+                {allPosts.length}
+              </p>
               <p class="text-gray-600 dark:text-gray-400">مقالة تقنية</p>
             </div>
             <!-- Add more stats blocks -->
