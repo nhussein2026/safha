@@ -1,12 +1,22 @@
 ---
-const { children } = Astro.props;
+// src/components/CodeBlock.astro
+
+const { code, language = "text" } = Astro.props;
 ---
 
-<pre
-  class="not-prose bg-gray-900 text-white p-4 rounded-xl overflow-x-auto font-mono border border-gray-700"
-  dir="ltr"
-  style="direction: ltr; unicode-bidi: isolate; text-align: left;">
-  <code class="block whitespace-pre" style="direction: ltr; unicode-bidi: isolate; text-align: left; font-family: 'Monaco', 'Consolas', monospace;">
-    {children}
-  </code>
-</pre>
+<div class="relative code-block group font-mono" dir="ltr">
+  <pre
+    class="p-4 rounded-lg bg-gray-800 overflow-x-auto text-left">
+    <code class={`language-${language} text-sm/6 text-gray-100 whitespace-pre`}>
+      {code}
+    </code>
+  </pre>
+
+  <button
+    class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-gray-300 hover:text-white bg-gray-700/50 hover:bg-gray-600 p-1.5 rounded-md text-sm border border-gray-600 backdrop-blur-sm"
+    onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)"
+    aria-label="Copy code"
+  >
+    📋
+  </button>
+</div>

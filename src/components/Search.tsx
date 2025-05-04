@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Fuse from 'fuse.js';
+import { useState, useEffect } from "react";
+import Fuse from "fuse.js";
 
 type Post = {
   title: string;
@@ -8,7 +8,7 @@ type Post = {
 };
 
 export default function Search() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState<Post[]>([]);
   const [fuse, setFuse] = useState<Fuse<Post> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,15 +16,15 @@ export default function Search() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch('/search-index.json')
+    fetch("/search-index.json")
       .then((res) => res.json())
       .then((data: Post[]) => {
         setFuse(
           new Fuse(data, {
-            keys: ['title', 'content'],
+            keys: ["title", "content"],
             threshold: 0.3,
             includeMatches: true,
-          })
+          }),
         );
         setIsLoading(false);
       })
@@ -79,10 +79,10 @@ export default function Search() {
           {query.trim() && (
             <p className="text-sm text-gray-500">
               {results.length > 0
-                ? `Found ${results.length} ${results.length === 1 ? 'result' : 'results'} for "${query}"`
+                ? `Found ${results.length} ${results.length === 1 ? "result" : "results"} for "${query}"`
                 : hasSearched
-                ? `No results found for "${query}"`
-                : ''}
+                  ? `No results found for "${query}"`
+                  : ""}
             </p>
           )}
 
@@ -92,10 +92,7 @@ export default function Search() {
                 key={post.slug}
                 className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                <a
-                  href={`/blog/${post.slug}`}
-                  className="block group"
-                >
+                <a href={`/blog/${post.slug}`} className="block group">
                   <h3 className="text-lg font-medium text-blue-600 group-hover:text-blue-800 transition-colors">
                     {post.title}
                   </h3>

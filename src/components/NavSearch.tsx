@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Fuse from 'fuse.js';
+import { useState, useEffect } from "react";
+import Fuse from "fuse.js";
 
 type Post = {
   title: string;
@@ -8,13 +8,13 @@ type Post = {
 };
 
 export default function NavSearch() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState<Post[]>([]);
   const [fuse, setFuse] = useState<Fuse<Post> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     setIsLoading(true);
     fetch(`${import.meta.env.BASE_URL}search-index.json`)
@@ -22,15 +22,15 @@ export default function NavSearch() {
       .then((data: Post[]) => {
         setFuse(
           new Fuse(data, {
-            keys: ['title', 'content'],
+            keys: ["title", "content"],
             threshold: 0.3,
             minMatchCharLength: 2,
-          })
+          }),
         );
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Search index load failed:', error);
+        console.error("Search index load failed:", error);
         setIsLoading(false);
       });
   }, []);
@@ -74,7 +74,9 @@ export default function NavSearch() {
       {query && (
         <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg max-h-96 overflow-y-auto">
           {isLoading ? (
-            <div className="p-4 text-gray-500 dark:text-gray-400">جاري التحميل...</div>
+            <div className="p-4 text-gray-500 dark:text-gray-400">
+              جاري التحميل...
+            </div>
           ) : results.length > 0 ? (
             results.map((post) => (
               <a
@@ -91,7 +93,9 @@ export default function NavSearch() {
               </a>
             ))
           ) : (
-            <div className="p-4 text-gray-500 dark:text-gray-400">لا توجد نتائج</div>
+            <div className="p-4 text-gray-500 dark:text-gray-400">
+              لا توجد نتائج
+            </div>
           )}
         </div>
       )}
