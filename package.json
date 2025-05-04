@@ -8,7 +8,7 @@
     "astro": "astro",
     "format": "prettier --write .",
     "generate-search-index": "tsx scripts/generate-search-index.ts",
-    "build": "npm run generate-search-index && astro build"
+    "build": "yarn generate-search-index && astro build"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.3",
