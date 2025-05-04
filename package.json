@@ -8,7 +8,7 @@
     "astro": "astro",
     "format": "prettier --write .",
     "generate-search-index": "tsx scripts/generate-search-index.ts",
-    "build": "yarn generate-search-index && astro build"
+    "build": "yarn generate-search-index && yarn astro build"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.3",
@@ -19,7 +19,7 @@
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/postcss": "^4.0.17",
     "@tailwindcss/typography": "^0.5.16",
-    "astro": "^5.7.9",
+    "astro": "^5.7.10",
     "astro-meta-tags": "^0.3.1",
     "astro-seo": "^0.8.4",
     "fuse.js": "^7.1.0",
@@ -40,8 +40,8 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^3.4.17",
     "ts-node": "^10.9.2",
-    "tsx": "^4.19.3",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
-  "packageManager": "yarn@4.9.1+sha512.f95ce356460e05be48d66401c1ae64ef84d163dd689964962c6888a9810865e39097a5e9de748876c2e0bf89b232d583c33982773e9903ae7a76257270986538"
+  "packageManager": "yarn@4.9.1"
 }
