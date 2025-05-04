@@ -34,6 +34,7 @@ const RAW_RUNTIME_STATE =
           ["@astrojs/sitemap", "npm:3.3.1"],\
           ["@astrojs/tailwind", "virtual:ad789db55ded0deaf59a5dc41c9b861d0c68d3bbe2a257eb3dd07bbcc913936bff20d44858c4280427d36152c233947ce6805559d7c3b81b88535e9b10aa7a59#npm:6.0.2"],\
           ["@floating-ui/dom", "npm:1.7.0"],\
+          ["@netlify/blobs", "npm:9.0.0"],\
           ["@popperjs/core", "npm:2.11.8"],\
           ["@tailwindcss/line-clamp", "virtual:ad789db55ded0deaf59a5dc41c9b861d0c68d3bbe2a257eb3dd07bbcc913936bff20d44858c4280427d36152c233947ce6805559d7c3b81b88535e9b10aa7a59#npm:0.4.4"],\
           ["@tailwindcss/postcss", "npm:4.1.5"],\
@@ -9243,6 +9244,7 @@ const RAW_RUNTIME_STATE =
           ["@astrojs/sitemap", "npm:3.3.1"],\
           ["@astrojs/tailwind", "virtual:ad789db55ded0deaf59a5dc41c9b861d0c68d3bbe2a257eb3dd07bbcc913936bff20d44858c4280427d36152c233947ce6805559d7c3b81b88535e9b10aa7a59#npm:6.0.2"],\
           ["@floating-ui/dom", "npm:1.7.0"],\
+          ["@netlify/blobs", "npm:9.0.0"],\
           ["@popperjs/core", "npm:2.11.8"],\
           ["@tailwindcss/line-clamp", "virtual:ad789db55ded0deaf59a5dc41c9b861d0c68d3bbe2a257eb3dd07bbcc913936bff20d44858c4280427d36152c233947ce6805559d7c3b81b88535e9b10aa7a59#npm:0.4.4"],\
           ["@tailwindcss/postcss", "npm:4.1.5"],\
