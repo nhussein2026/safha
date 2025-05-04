@@ -8,8 +8,8 @@ import Pagination from "../../components/Pagination.astro";
 const allPosts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
-const firstPagePosts = allPosts.slice(0, 4);
-const totalPages = Math.ceil(allPosts.length / 4);
+const firstPagePosts = allPosts.slice(0, 6);
+const totalPages = Math.ceil(allPosts.length / 6);
 const categories = new Set(allPosts.flatMap((post) => post.data.categories));
 const tags = new Set(allPosts.flatMap((post) => post.data.tags));
 const years = new Set(allPosts.map((post) => post.data.pubDate.getFullYear()));
