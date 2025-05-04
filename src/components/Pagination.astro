@@ -1,9 +1,12 @@
 ---
-// src/components/Pagination.astro
-// Add default values for safety
-const { currentPage = 1, totalPages = 1, baseUrl = "" } = Astro.props;
-const getPageUrl = (pageNum) =>
-  pageNum === 1 ? baseUrl : `${baseUrl}/${pageNum}`;
+const { currentPage, totalPages } = Astro.props;
+
+// Ensure absolute URLs by optionally using the origin
+const getPageUrl = (pageNum) => {
+  // Use Astro.url.origin to construct a full absolute URL
+  const base = Astro.url.origin; // e.g., http://localhost:4321
+  return pageNum === 1 ? `${base}/blog` : `${base}/blog/page/${pageNum}`;
+};
 ---
 
 <div class="flex justify-center items-center gap-2 my-12">
@@ -54,7 +57,7 @@ const getPageUrl = (pageNum) =>
     Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
       <a
         key={page}
-        href={`${baseUrl}/${page}`}
+        href={getPageUrl(page)}
         class={`px-3.5 py-1.5 rounded-lg text-sm ${
           page === currentPage
             ? "bg-purple-600 text-white"

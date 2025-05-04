@@ -79,11 +79,7 @@ const years = new Set(allPosts.map((post) => post.data.pubDate.getFullYear()));
               ))
             }
           </div>
-          <Pagination
-            currentPage={1}
-            totalPages={totalPages}
-            baseUrl="/blog/page"
-          />
+          <Pagination currentPage={1} totalPages={totalPages} />
         </div>
 
         <!-- Sidebar Filters -->

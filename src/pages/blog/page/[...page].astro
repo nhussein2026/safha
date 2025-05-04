@@ -12,10 +12,12 @@ export async function getStaticPaths({ paginate }) {
   );
   return paginate(allPosts, { pageSize: 4 });
 }
-// Safely handle page prop
+
 const page = Astro.props.page;
 if (!page) throw new Error("Pagination props missing!");
-const { currentPage, totalPages, data: posts } = page;
+const currentPage = page.currentPage;
+const totalPages = page.lastPage;
+const posts = page.data;
 
 // Use sorted posts for sidebar consistency
 const allPosts = (await getCollection("blog")).sort(
@@ -83,11 +85,7 @@ const years = new Set(allPosts.map((p) => p.data.pubDate.getFullYear()));
               ))
             }
           </div>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            baseUrl="/blog/page"
-          />
+          <Pagination currentPage={currentPage} totalPages={totalPages} />
         </div>
 
         <!-- Sidebar -->
