@@ -1,0 +1,58 @@
+---
+// src/components/Highlight.astro
+const { type = "text", variant = "primary" } = Astro.props;
+
+const variants = {
+  primary: {
+    light: "bg-blue-100/60 text-blue-900 border border-blue-200/50",
+    dark: "dark:bg-blue-900/30 dark:text-blue-100 dark:border-blue-800/50",
+  },
+  secondary: {
+    light: "bg-purple-100/60 text-purple-900 border border-purple-200/50",
+    dark: "dark:bg-purple-900/30 dark:text-purple-100 dark:border-purple-800/50",
+  },
+  code: {
+    light: "bg-gray-100/70 text-gray-700 border border-gray-200/50 font-mono",
+    dark: "dark:bg-gray-800/70 dark:text-gray-200 dark:border-gray-700/50",
+  },
+};
+
+const baseStyles = "rounded-md px-1.5 py-0.5 text-sm leading-normal";
+---
+
+<span
+  class:list={[
+    baseStyles,
+    variants[variant].light,
+    variants[variant].dark,
+    type === "code" && "font-mono text-[0.9em]",
+  ]}
+>
+  <slot />
+</span>
+
+<style is:global>
+  /* Smooth backdrop blur effect */
+  [class*="bg-"]:has(> .hl-highlight) {
+    backdrop-filter: blur(4px);
+  }
+
+  /* Better code highlighting */
+  .hl-code {
+    font-family: "Fira Code", monospace;
+    letter-spacing: -0.02em;
+  }
+</style>
+
+<!--
+# Documentation Section 
+- Use inline highlights for <Highlight>important terms</Highlight> or
+<Highlight variant="secondary">key concepts</Highlight> within sentences. 
+
+-For code
+terms: <Highlight type="code">printf()</Highlight> or
+<Highlight variant="code">const foo = bar</Highlight>. Mix and match: <Highlight variant="secondary"
+
+  type="code">JSON.parse()</Highlight
+>.
+-->

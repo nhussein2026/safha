@@ -22,7 +22,7 @@ let copied = false;
         data-command={command}
         aria-label="Copy code"
       >
-        {copied ? "Copied!" : "Copy"}
+        {copied ? "تم النسخ!" : "نسخ الكود"}
       </button>
     </div>
   </div>
@@ -31,7 +31,7 @@ let copied = false;
     id="code-window-content"
     class="text-sm whitespace-pre-wrap text-left overflow-x-auto pb-2 font-[Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace]"
   >
-    {command} $
+    {command}
   </div>
 </aside>
 <script>
@@ -43,9 +43,9 @@ let copied = false;
         navigator.clipboard
           .writeText(command)
           .then(() => {
-            button.textContent = "Copied!";
+            button.textContent = "تم النسخ!";
             setTimeout(() => {
-              button.textContent = "Copy";
+              button.textContent = "نسخ الكود";
             }, 2000);
           })
           .catch((err) => {

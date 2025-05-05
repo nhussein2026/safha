@@ -45,3 +45,9 @@ pre[dir="ltr"] code {
   direction: ltr !important;
   unicode-bidi: isolate !important;
 }
+
+.highlight {
+  background-color: red;
+  padding: 0 4px;
+  border-radius: 2px;
+}

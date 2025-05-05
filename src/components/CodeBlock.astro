@@ -6,7 +6,8 @@ const { code, language = "text" } = Astro.props;
 
 <div class="relative code-block group font-mono" dir="ltr">
   <pre
-    class="p-4 rounded-lg bg-gray-800 overflow-x-auto text-left">
+    dir="ltr"
+    class="p-4 rounded-lg bg-gray-800 overflow-x-auto text-left text-ltr">
     <code class={`language-${language} text-sm/6 text-gray-100 whitespace-pre`}>
       {code}
     </code>
