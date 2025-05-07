@@ -14,7 +14,26 @@ export default defineConfig({
     mdx(),
     tailwind(),
     react(),
-    sitemap({ changefreq: "weekly", priority: 0.7, lastmod: new Date() }),
+    sitemap({
+      changefreq: "weekly",
+      priority: 0.7,
+      lastmod: new Date(),
+      filter: (url) => {
+        console.log("Checking URL:", url);
+        // Allow exact matches
+        const allowed = new Set([
+          "/",
+          "/about",
+          "/about/",
+          "/search",
+          "/search/",
+        ]);
+        if (allowed.has(url)) return true;
+
+        // Block any URL containing these segments
+        return !/\/(about|search)(\/|$)/.test(url);
+      },
+    }),
     astroMetaTags(),
   ],
   site: "https://safha.dev",
