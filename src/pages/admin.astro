@@ -1,0 +1,13 @@
+---
+// src/pages/admin.astro
+import Layout from "../layouts/Layout.astro";
+import AdminPanel from "../components/AdminPanel.astro";
+//Only allow access in development
+if (!import.meta.env.DEV) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout title="Admin Panel">
+  <AdminPanel />
+</Layout>

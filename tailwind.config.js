@@ -21,6 +21,7 @@ module.exports = {
         "royal-periwinkle": "#4F46E5", // CTAs
         "emerald-growth": "#10B981", // Positive
         "amber-glow": "#F59E0B", // Highlights
+        "aqua-accent": "#27FFE3", // Accent color
       },
 
       // hero section background settings
