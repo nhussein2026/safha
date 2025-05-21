@@ -37,10 +37,8 @@ export default defineConfig({
     astroMetaTags(),
   ],
   site: "https://safha.dev",
-  output: "static", // Force static output always
-  adapter: netlify({
-    builders: true, // Enable ISR
-  }),
+  output: import.meta.env.DEV ? "server" : "static",
+  adapter: import.meta.env.DEV ? netlify() : undefined,
   vite: {
     resolve: {
       alias: {

@@ -27,7 +27,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (!import.meta.env.DEV) {
     return new Response(
       JSON.stringify({ error: "Admin features disabled in production" }),
-      { status: 403, headers: { "Content-Type": "application/json" } },
+      { status: 403, headers: { "Content-Type": "application/json" } }
     );
   }
 
@@ -46,7 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
       "content",
       "blog",
       data.year,
-      mm,
+      mm
     );
     await fs.mkdir(contentDir, { recursive: true });
 
@@ -90,12 +90,12 @@ slug: "${data.slug}"
         success: true,
         filePath: filePath.replace(process.cwd(), ""),
       }),
-      { status: 200, headers: { "Content-Type": "application/json" } },
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (err: any) {
     return new Response(
       JSON.stringify({ success: false, error: err.message }),
-      { status: 400, headers: { "Content-Type": "application/json" } },
+      { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
 };
